@@ -4,7 +4,7 @@
 <h1 class="text-dark jumbotron">{{ movie.title }}</h1>
 <h3 class="secondary"><span style="font-size:0.7rem"class="text-muted">좋아요</span>{{ movie.user_id.count }} </h3>
 <div class="container float-right">
-{% if user in movie.user_id.all %}
+{% if user in movie.like_users.all %}
 <a href="{% url 'movies:like' movie.pk %}"><button class="btn btn-outline-danger">안좋아요</button></a>
 {% else %}
 <a href="{% url 'movies:like' movie.pk %}"><button class="btn btn-danger">좋아요</button></a>
