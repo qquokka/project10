@@ -1,5 +1,5 @@
 ---
-typora-root-url: images
+typora-root-url: ./
 ---
 
 # Project 10
@@ -59,15 +59,15 @@ def review_delete(request, movie_pk, review_pk):
 
 처음엔 0점
 
-![score0](/score0.PNG)
+![score0](/images/score0.PNG)
 
 5점을 준 후
 
-![score5](/score5.PNG)
+![score5](/images/score5.PNG)
 
 8점을 준 후
 
-![score13](/score13.PNG)
+![score13](/images/score13.PNG)
 
 평점이 6.5로 바뀐 것을 볼 수 있다.
 
@@ -85,7 +85,7 @@ def index(request):
     return render(request, 'movies/index.html', context)
 ```
 
-![movie_recommendation](/movie_recommendation.PNG)
+![movie_recommendation](/images/movie_recommendation.PNG)
 
 영화 목록 상단에 해당 영화 포스터를 추가하였고, 포스터를 누르면 영화 상세 정보로 이동하도록 했다.
 
@@ -95,13 +95,13 @@ def index(request):
 
 ### 1. 유저 정보
 
-![user_detail](/user_detail.PNG)
+![user_detail](/images/user_detail.PNG)
 
 ### 2. 영화 상세 정보
 
 좋아요 버튼을 누르면 안좋아요 버튼으로 바뀌게 했다. 안좋아요 버튼 옆의 숫자는 좋아요한 유저의 수를 의미한다.
 
-![movie_detail](/movie_detail.png)
+![movie_detail](/images/movie_detail.png)
 
 ## 5. 협업 과정에서 느낀점
 
