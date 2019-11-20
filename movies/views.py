@@ -23,8 +23,8 @@ def review_create(request, movie_pk):
         form = ReviewForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.user_id = request.user
-            comment.movie_id = movie
+            comment.user = request.user
+            comment.movie = movie
             comment.save()
             return redirect('movies:detail', movie_pk)
         else:
@@ -33,7 +33,7 @@ def review_create(request, movie_pk):
 
 def review_delete(request, movie_pk, review_pk):
     review = Review.objects.get(pk=review_pk)
-    if request.user == review.user_id: 
+    if request.user == review.user: 
         review.delete()
     return redirect('movies:detail', movie_pk)
 
@@ -41,8 +41,8 @@ def review_delete(request, movie_pk, review_pk):
 @login_required
 def like(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
-    if request.user in movie.user_id.all():
-        movie.user_id.remove(request.user)
+    if request.user in movie.like_users.all():
+        movie.like_users.remove(request.user)
     else:
-        movie.user_id.add(request.user)
+        movie.like_users.add(request.user)
     return redirect('movies:detail', movie_pk)
