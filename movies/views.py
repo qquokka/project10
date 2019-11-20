@@ -6,14 +6,14 @@ from .forms import ReviewForm
 
 # Create your views here.
 def index(request):
-    return render(request, 'movies/index.html', {'movies': Movie.objects.all()})
+    return render(request, 'movies/index.html', {'movies': Movie.objects.all(), 'movie_recom': Movie.objects.order_by('-score_avg')[0]})
 
 
 def detail(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     form = ReviewForm()
     reviews = movie.review_set.all()
-    return render(request, 'movies/detail.html', {'movie': movie, 'form': form, 'reviews': reviews,})
+    return render(request, 'movies/detail.html', {'movie': movie, 'form': form, 'reviews': reviews, })
 
 
 @login_required
@@ -26,6 +26,9 @@ def review_create(request, movie_pk):
             comment.user = request.user
             comment.movie = movie
             comment.save()
+            movie.score_sum += comment.score
+            movie.score_avg = round(movie.score_sum / max(movie.review_set.count(), 1), 2)
+            movie.save()
             return redirect('movies:detail', movie_pk)
         else:
             return redirect('movies.detail', movie_pk)
@@ -34,7 +37,11 @@ def review_create(request, movie_pk):
 def review_delete(request, movie_pk, review_pk):
     review = Review.objects.get(pk=review_pk)
     if request.user == review.user: 
+        movie = Movie.objects.get(pk=movie_pk)
+        movie.score_sum -= review.score
         review.delete()
+        movie.score_avg = round(movie.score_sum / max(movie.review_set.count(), 1), 2)
+        movie.save()
     return redirect('movies:detail', movie_pk)
 
 

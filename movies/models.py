@@ -13,6 +13,8 @@ class Movie(models.Model):
     description = models.TextField()
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies')
+    score_sum = models.IntegerField(default=0)
+    score_avg = models.FloatField(default=0)
 
 
 class Review(models.Model):

@@ -2,14 +2,7 @@
 {% block body %}
 <div class="container flex-nowrap">
 <h1 class="text-dark jumbotron">{{ movie.title }}</h1>
-<h3 class="secondary"><span style="font-size:0.7rem"class="text-muted">좋아요</span>{{ movie.user_id.count }} </h3>
-<div class="container float-right">
-{% if user in movie.like_users.all %}
-<a href="{% url 'movies:like' movie.pk %}"><button class="btn btn-outline-danger">안좋아요</button></a>
-{% else %}
-<a href="{% url 'movies:like' movie.pk %}"><button class="btn btn-danger">좋아요</button></a>
-{% endif %}
-</div>
+
 <div class="text-right">
 <h3 class="secondary"><span style="font-size:0.7rem"class="text-muted">관객 수 :</span>{{ movie.audience }} </h3>
 <div class="p-5 shadow">
@@ -19,7 +12,16 @@
 
 </div>
 <div class="text-area readonly px-5 py-2 shadow mb-5">{{ movie.description }}</div>
+<div class="container float-right">
+    {% if user in movie.like_users.all %}
+    <a href="{% url 'movies:like' movie.pk %}"><button class="btn btn-outline-danger">안좋아요 {{ movie.like_users.count }}</button></a>
+    {% else %}
+    <a href="{% url 'movies:like' movie.pk %}"><button class="btn btn-danger">좋아요 {{ movie.like_users.count }}</button></a>
+    {% endif %}
+    </div>
 <div class="">
+  
+<h2 class="text-center">평균 평점: {{ movie.score_avg }}점</h2>
 <h1>평점 목록 </h1>
 <div style="background-color:#f5f5dc">
 {% for review in reviews %}
