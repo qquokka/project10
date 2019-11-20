@@ -6,3 +6,9 @@ def index(request):
         'users' : get_user_model().objects.all()
     }
     return render(request, 'accounts/index.html', context)
+
+def detail(request, user_pk):
+    context = {
+        'user' : get_user_model().objects.get(pk=user_pk)
+    }
+    return render(request, 'accounts/detail.html', context)
